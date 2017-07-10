@@ -25,16 +25,16 @@ class App extends Component {
                     key={'cell' + i}
                     screenWidth={screenWidth}
                     screenHeight={screenHeight}
+                    marginTop={70}
                 />
             );
-            break; // debug: testing with just one letter
         }
 
         return (
             <View style={styles.container} onLayout={this.handleLayout}>
 
                 <Text style={styles.welcome}>
-                    {screenWidth} x {screenHeight}
+                    Qaida Board
                 </Text>
 
                 {gridCells}

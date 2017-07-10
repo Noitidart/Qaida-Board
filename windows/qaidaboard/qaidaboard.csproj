@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{aa26e77b-03e4-440b-878a-325cc1b18054}</ProjectGuid>
+    <ProjectGuid>{4ddbfe4c-77b3-49c3-a629-7aed8347353e}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>qaidaboard</RootNamespace>
@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>qaidaboard_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>8F4A27E3DC7D566734AE51A84B3FFE8DBE9A0450</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>AF42FEC8345830B4FC3752931C4904F7F16CBD9B</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>

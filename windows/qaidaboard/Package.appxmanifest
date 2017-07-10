@@ -7,12 +7,12 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="15adb171-6c3a-4e11-bc6b-bb5ef356d3d9"
-    Publisher="CN=x1
+    Name="c860777e-896a-4c3f-8169-bce65cd91fa3"
+    Publisher="CN=Mercurius
 "
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="15adb171-6c3a-4e11-bc6b-bb5ef356d3d9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c860777e-896a-4c3f-8169-bce65cd91fa3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>qaidaboard</DisplayName>
