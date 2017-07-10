@@ -13,8 +13,7 @@ class App extends Component {
     render() {
         const{screenHeight, screenWidth} = this.state;
 
-        const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-                        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        const letters = ['alif', 'ba', 'ta', 'taa', 'geem', 'hha', 'kha', 'dal', 'dhal', 'ra', 'za', 'seen', 'sheen', 'saud', 'daud', 'tau', 'dau', 'ayn', 'ghayn', 'fa', 'qaf', 'kaf', 'lam', 'meem', 'noon', 'ha', 'wow', 'ya'];
         const gridCells = [];
 
         for(let i = 0; i < letters.length; i++){
