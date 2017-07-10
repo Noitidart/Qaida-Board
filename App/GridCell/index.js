@@ -1,19 +1,64 @@
 import React, { Component } from 'react'
-import { TouchableHighlight, Text, View, Animated } from 'react-native'
+import { Text, View, Animated } from 'react-native'
+
+import Combinatrix from '../Combinatrix'
+
+import { ARABIC_LETTERS, TASHKEEL_LETTERS, letterFromLetter, isTashkeel } from '../utils'
 
 import styles from './style.css'
 
+
 const CELLS_PER_ROW = 6;
+const ZOOM_DURATION = 300; // ms
+
+const TASHKEEL_LETTERS_LETTERS = TASHKEEL_LETTERS.map(letter => letterFromLetter(letter)).reverse();
+const ARABIC_LETTERS_LETTERS = ARABIC_LETTERS.map(letter => letterFromLetter(letter)).reverse();
 
 class GridCell extends Component {
     state = {
         zoomed: false,
         isZooming: false,
-        anim: new Animated.Value(0)
+        anim: new Animated.Value(0),
+        content: this.props.content
     }
 
     handlePress = () => {
         this.setState(stateOld => ({ zoomed:!stateOld.zoomed, isZooming:true }));
+    }
+
+    addContent = content => {
+        this.setState( stateOld => ({ content: stateOld.content + content }) );
+    }
+
+    backspaceContent = () => {
+        this.setState( stateOld => {
+            const contentPartsNew = stateOld.content.split(',');
+
+            if (contentPartsNew.length === 1) return;
+
+            if (isTashkeel(contentPartsNew[contentPartsNew.length - 1])) {
+                contentPartsNew.pop();
+                contentPartsNew.pop();
+            } else {
+                contentPartsNew.pop();
+            }
+
+            const contentNew = contentPartsNew.join(',');
+
+            return { content:contentNew };
+         } );
+    }
+
+    resetContent = () => {
+        this.setState( stateOld => {
+            const contentParts = stateOld.content.split(',');
+
+            if (contentParts.length === 1) return;
+
+            const contentNew = contentParts[0];
+
+            return { content:contentNew };
+         } );
     }
 
     componentDidUpdate(propsOld, stateOld) {
@@ -23,7 +68,7 @@ class GridCell extends Component {
         if (zoomed !== zoomedOld) {
             const { anim } = this.state;
             const toValue = zoomed ? 1 : 0;
-            Animated.timing(anim, { toValue, duration:1000 }).start(e => {
+            Animated.timing(anim, { toValue, duration:ZOOM_DURATION }).start(e => {
                 // console.log('anim finished:', e.finished);
                 if (e.finished) {
                     this.setState(() => ({isZooming:false}))
@@ -34,8 +79,8 @@ class GridCell extends Component {
 
     render() {
 
-        const {content, i, screenWidth, screenHeight, marginTop = 0} = this.props
-        const { isZooming, zoomed, anim } = this.state;
+        const { i, screenWidth, screenHeight, marginTop = 0} = this.props
+        const { content, isZooming, zoomed, anim } = this.state;
 
         const row = Math.floor(i / CELLS_PER_ROW);
         const col = Math.floor(i % CELLS_PER_ROW);
@@ -80,6 +125,10 @@ class GridCell extends Component {
                 inputRange: [0, 1],
                 outputRange: [cellHeightNorm, cellHeightZoomed]
             }),
+            // paddingBottom: anim.interpolate({
+            //     inputRange: [0, 1],
+            //     outputRange: [0, 200]
+            // }),
             zIndex: isZooming || zoomed ? 1 : 0
         };
 
@@ -91,55 +140,19 @@ class GridCell extends Component {
         }
 
 
+        const contentParts = content.split(',');
+        const contentStr = contentParts.map( letter => letterFromLetter(letter) ).join('');
+
+        const shouldShowTashkeels = zoomed && !isTashkeel(contentParts[contentParts.length - 1]);
+
         return (
             <Animated.View style={[styles.gridCell, cellStyle]}>
                 <Animated.Text style={[styles.text, textStyle]} onPress={this.handlePress}>
-                    { content.split(',').map( letter => letterFromLetter(letter) ).join('') }
+                    { contentStr }
                 </Animated.Text>
+                { zoomed && <Combinatrix tashkeels={TASHKEEL_LETTERS_LETTERS} letters={ARABIC_LETTERS_LETTERS} delayShow={ZOOM_DURATION} shouldShowTashkeels /> }
             </Animated.View>
         )
-    }
-}
-
-function letterFromLetter(letter) {
-    switch (letter) {
-        case 'alif': return '\u0627';
-        case 'ba': return '\u0628';
-        case 'ta': return '\u062A';
-        case 'taa': return '\u062B';
-        case 'geem': return '\u062C';
-        case 'hha': return '\u062D';
-        case 'kha': return '\u062E';
-        case 'dal': return '\u062F';
-        case 'dhal': return '\u0630';
-        case 'ra': return '\u0631';
-        case 'za': return '\u0632';
-        case 'seen': return '\u0633';
-        case 'sheen': return '\u0634';
-        case 'saud': return '\u0635';
-        case 'daud': return '\u0636';
-        case 'tau': return '\u0637';
-        case 'dau': return '\u0638';
-        case 'ayn': return '\u0639';
-        case 'ghayn': return '\u063A';
-        case 'fa': return '\u0641';
-        case 'qaf': return '\u0642';
-        case 'kaf': return '\u0643';
-        case 'lam': return '\u0644';
-        case 'meem': return '\u0645';
-        case 'noon': return '\u0646';
-        case 'ha': return '\u0647';
-        case 'wow': return '\u0648';
-        case 'ya': return '\u064A';
-        //
-        case 'fata': return '\u064E';
-        case 'kasra': return '\u0650';
-        case 'dumma': return '\u064F';
-        case 'fatatan': return '\u064B';
-        case 'kasratan': return '\u064D';
-        case 'dummatan': return '\u064C';
-        //
-        default: return letter;
     }
 }
 

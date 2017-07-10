@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, Dimensions } from 'react-native';
-import styles from './style.css'
+
 import GridCell from './GridCell'
+
+import { ARABIC_LETTERS } from './utils'
+import styles from './style.css'
 
 class App extends Component {
 
@@ -13,7 +16,7 @@ class App extends Component {
     render() {
         const{screenHeight, screenWidth} = this.state;
 
-        const letters = ['alif', 'ba', 'ta', 'taa', 'geem', 'hha', 'kha', 'dal', 'dhal', 'ra', 'za', 'seen', 'sheen', 'saud', 'daud', 'tau', 'dau', 'ayn', 'ghayn', 'fa', 'qaf', 'kaf', 'lam', 'meem', 'noon', 'ha', 'wow', 'ya'];
+        const letters = ARABIC_LETTERS;
         const gridCells = [];
 
         for(let i = 0; i < letters.length; i++){
